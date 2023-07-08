@@ -2,7 +2,7 @@ import EmploeeysListItem from '../emploeeys-list-item/emploeeys-list-item';
 
 import './emploeeys-list.css';
 
-const EmploeeysList = ({ data, onDelete }) => {
+const EmploeeysList = ({ data, onDelete, onToggleIncrease, onToggleRise }) => {
 
    const elements = data.map(elem => {
       const { id, ...itemProps } = elem;
@@ -10,7 +10,9 @@ const EmploeeysList = ({ data, onDelete }) => {
          <EmploeeysListItem
             key={id}
             {...itemProps}
-            onDelete={() => onDelete(id)} />
+            onDelete={() => onDelete(id)}
+            onToggleIncrease={() => onToggleIncrease(id)}
+            onToggleRise={() => onToggleRise(id)} />
       );
    });
 

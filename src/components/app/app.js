@@ -13,10 +13,10 @@ class App extends Component {
       super(props);
       this.state = {
          data: [
-            { name: "John S.", salary: 800, increase: false, promotion: false, id: 1 },
-            { name: "Alex M.", salary: 1000, increase: true, promotion: false, id: 2 },
-            { name: "Stiven K.", salary: 1200, increase: false, promotion: false, id: 3 },
-            { name: "Suzan L.", salary: 1500, increase: false, promotion: false, id: 4 },
+            { name: "John S.", salary: 800, increase: false, rise: true, id: 1 },
+            { name: "Alex M.", salary: 1000, increase: true, rise: false, id: 2 },
+            { name: "Stiven K.", salary: 1200, increase: false, rise: false, id: 3 },
+            { name: "Suzan L.", salary: 1500, increase: false, rise: false, id: 4 },
          ]
       }
       this.maxId = 5;
@@ -38,6 +38,7 @@ class App extends Component {
          name: name,
          salary: salary,
          increase: false,
+         rise: false,
          id: this.maxId++
       }
 
@@ -49,17 +50,54 @@ class App extends Component {
       });
    }
 
+   onToggleIncrease = (id) => {
+      this.setState(({ data }) => {
+         //Получаем индекс элемента
+         const index = data.findIndex(elem => elem.id === id);
+
+         //создание копии index обьекта
+         //старый обьект
+         const old = data[index];
+         //создание копии обьекта
+         const newItem = { ...old, increase: !old.increase };
+         //создаем новый массив в state (не изм. часть + изм + не изм. остаток)
+         const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+         return {
+            data: newArr
+         }
+      });
+   }
+
+   onToggleRise = (id) => {
+      this.setState(({ data }) => ({
+         data: data.map(item => {
+            if (item.id === id) {
+               return { ...item, rise: !item.rise }
+            }
+            return item;
+         })
+      }))
+   }
+
    render() {
+      const emploeeys = this.state.data.length;
+      const increased = this.state.data.filter(item => item.increase).length;
+
       return (
          <div className="app">
-            <AppInfo />
+            <AppInfo
+               emploeeys={emploeeys}
+               increased={increased} />
             <div className="search-panel">
                <SearchPanel />
                <AppFilter />
             </div>
             <EmploeeysList
                data={this.state.data}
-               onDelete={this.deleteItem} />
+               onDelete={this.deleteItem}
+               onToggleIncrease={this.onToggleIncrease}
+               onToggleRise={this.onToggleRise} />
             <EmploeeysAddForm onAdd={this.addItem} />
          </div>
       )
