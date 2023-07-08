@@ -24,13 +24,24 @@ class EmploeeysAddForm extends Component {
          this.props.onAdd(this.state.name, this.state.salary);
          this.setState({
             name: '',
-            salary: ''
+            salary: '',
+            error: false
+         });
+      } else {
+         this.setState({
+            error: true
          });
       }
    }
 
    render() {
-      const { name, salary } = this.state;
+      const { name, salary, error } = this.state;
+
+      let classNames = "form-control new-post-label";
+
+      if (error === true) {
+         classNames += " red";
+      }
 
       return (
          <div className="app-add-form">
@@ -39,13 +50,13 @@ class EmploeeysAddForm extends Component {
                //Вызов метода onSubmit при отправке формы
                onSubmit={this.onSubmit}>
                <input type="text"
-                  className="form-control new-post-label"
+                  className={classNames}
                   placeholder="Имя сотрудника"
                   name="name"
                   value={name}
                   onChange={this.onValueChange} />
                <input type="number"
-                  className="form-control new-post-label"
+                  className={classNames}
                   placeholder="3/П в $?"
                   name="salary"
                   value={salary}
