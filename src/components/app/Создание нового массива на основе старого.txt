@@ -1,0 +1,9 @@
+//Получаем индекс элемента по приходящему id
+const index = data.findIndex(elem => elem.id === id);
+
+//Создаем новый массив без элемента индекс кт=оторого был найден.
+//before- массив с элементами от 0 до испомого. after- массив с элементами от искомого и далее.
+//newArr- новый массив без искомого элемента
+const before = data.slice(0, index);
+const after = data.slice(index + 1);
+const newArr = [...before, ...after];
