@@ -6,6 +6,7 @@ const AppFilter = (props) => {
       { name: 'all', label: 'Список всех сотрудников' },
       { name: 'rise', label: 'На повышение' },
       { name: 'moreThen1000', label: 'З/П больше 1000$' },
+      { name: 'increase', label: 'Получат премию' }
    ]
 
    const buttons = buttonsData.map(({ name, label }) => {
